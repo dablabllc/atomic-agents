@@ -1,14 +1,17 @@
 # Atomic Agents
 
 
-Forked from BrainBlend-AI
-This repository is set up for local deployments of Ollama
-Simply add the .env files to suit your environment
 
 
 <img src="./.assets/logo.png" alt="Atomic Agents" width="350"/>
 
 ---
+
+
+Forked from BrainBlend-AI
+This repository is set up for local deployments of Ollama
+Simply add the .env files to suit your environment
+
 
 [![PyPI version](https://badge.fury.io/py/atomic-agents.svg)](https://badge.fury.io/py/atomic-agents)
 
