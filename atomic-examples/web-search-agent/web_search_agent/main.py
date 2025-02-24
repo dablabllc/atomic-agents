@@ -7,6 +7,10 @@ from atomic_agents.agents.base_agent import BaseAgent, BaseAgentConfig
 from atomic_agents.lib.components.agent_memory import AgentMemory
 from atomic_agents.lib.components.system_prompt_generator import SystemPromptContextProviderBase
 
+load_dotenv()
+
+print(os.getcwd())
+
 from web_search_agent.tools.searxng_search import (
     SearxNGSearchTool,
     SearxNGSearchToolConfig,
@@ -21,6 +25,9 @@ import instructor
 
 load_dotenv()
 
+print(os.getenv("OPENAI_API_KEY"))
+print(os.getenv("SEARXNG_BASE_URL"))
+
 # Initialize a Rich Console for pretty console outputs
 console = Console()
 
@@ -33,14 +40,14 @@ search_tool = SearxNGSearchTool(config=SearxNGSearchToolConfig(base_url=os.geten
 # Initialize the BaseAgent
 agent = BaseAgent(
     config=BaseAgentConfig(
-        client=instructor.from_openai(openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))),
-        model="gpt-4o-mini",
+        client=instructor.from_openai(openai.OpenAI(base_url="http://localhost:11434/v1", api_key="ollama"), mode=instructor.Mode),
+        model="llama3.1:8b",
         memory=memory,
     )
 )
 
 # Example usage
-instruction = "Tell me about the Atomic Agents AI agent framework."
+instruction = "What are the medicinal effects of ganoderma multipileum?"
 num_queries = 3
 
 # Generate queries using the query agent

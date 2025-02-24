@@ -17,7 +17,7 @@ class QuestionAnsweringAgentOutputSchema(BaseIOSchema):
 
     markdown_output: str = Field(..., description="The answer to the question in markdown format.")
     references: List[HttpUrl] = Field(
-        ..., max_items=3, description="A list of up to 3 HTTP URLs used as references for the answer."
+        ..., max_items=5, description="A list of up to 5 HTTP URLs used as references for the answer."
     )
     followup_questions: List[str] = Field(
         ..., max_items=3, description="A list of up to 3 follow-up questions related to the answer."
@@ -27,8 +27,8 @@ class QuestionAnsweringAgentOutputSchema(BaseIOSchema):
 # Create the question answering agent
 question_answering_agent = BaseAgent(
     BaseAgentConfig(
-        client=instructor.from_openai(openai.OpenAI()),
-        model="gpt-4o-mini",
+        client=instructor.from_openai(openai.OpenAI(base_url="http://localhost:11434/v1", api_key="ollama"), mode=instructor.Mode.JSON),
+        model="llama3.1:8b",
         system_prompt_generator=SystemPromptGenerator(
             background=[
                 "You are an intelligent question answering expert.",
@@ -36,14 +36,15 @@ question_answering_agent = BaseAgent(
             ],
             steps=[
                 "You will receive a question and the context information.",
+                "Provide the question and context information unedited",
                 "Generate a detailed and accurate answer based on the context.",
-                "Provide up to 3 relevant references (HTTP URLs) used in formulating the answer.",
+                "Provide up to 5 relevant references (HTTP URLs) used in formulating the answer.",
                 "Generate up to 3 follow-up questions related to the answer.",
             ],
             output_instructions=[
                 "Ensure clarity and conciseness in each answer.",
                 "Ensure the answer is directly relevant to the question and context provided.",
-                "Include up to 3 relevant HTTP URLs as references.",
+                "Include up to 5 relevant HTTP URLs as references.",
                 "Provide up to 3 follow-up questions to encourage further exploration of the topic.",
             ],
         ),

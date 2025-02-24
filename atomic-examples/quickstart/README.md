@@ -19,9 +19,24 @@ To run these examples:
 3. Install the dependencies using Poetry:
    ```
    poetry install
+
+4. Create the .env variables
+
+   BASE_URL=http://localhost:11434/v1
+   OPENAI_API_KEY=ollama
+
+   SEARXNG_BASE_URL=https://searxng.domain.com
+   SEARXNG_MAX_RESULTS=15
+
+   FAST_LLM=llama3.1:8b
+   SMART_LLM=qwen2.5:32b
+   VISION_LLM=llama3.2-vision:11b
+
+   Replace `localhost` if you are running ollama on a different machine.
+   Replace 'https://searxng.domain.com' with your SearXNG domain name.
    ```
 
-4. Run the examples using Poetry:
+5. Run the examples using Poetry:
    ```
    poetry run python quickstart/1_basic_chatbot.py
    ```

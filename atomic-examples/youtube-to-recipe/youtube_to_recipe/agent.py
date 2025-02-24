@@ -6,7 +6,7 @@ from typing import List, Optional
 from atomic_agents.agents.base_agent import BaseAgent, BaseAgentConfig, BaseIOSchema
 from atomic_agents.lib.components.system_prompt_generator import SystemPromptContextProviderBase, SystemPromptGenerator
 
-
+from youtube_to_recipe.config import get_base_url, get_api_key, get_fast_llm
 class YtTranscriptProvider(SystemPromptContextProviderBase):
     def __init__(self, title):
         super().__init__(title)
@@ -78,8 +78,8 @@ transcript_provider = YtTranscriptProvider(title="YouTube Recipe Transcript")
 
 youtube_recipe_extraction_agent = BaseAgent(
     config=BaseAgentConfig(
-        client=instructor.from_openai(openai.OpenAI()),
-        model="gpt-4o-mini",
+        client=instructor.from_openai(openai.OpenAI(base_url=get_base_url(), api_key=get_api_key()), mode=instructor.Mode.JSON),
+        model=get_fast_llm(),
         system_prompt_generator=SystemPromptGenerator(
             background=[
                 "This Assistant is an expert at extracting detailed recipe information from cooking video transcripts.",

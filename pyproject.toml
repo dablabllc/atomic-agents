@@ -6,7 +6,7 @@ build-backend = "poetry.core.masonry.api"
 name = "atomic-agents"
 version = "1.0.21"
 description = "A versatile framework for creating and managing intelligent agents."
-authors = ["Kenny Vaneetvelde <kenny.vaneetvelde@gmail.com>"]
+authors = ["Frederick Selkey <dablabllc@gmail.com>"]
 readme = "README.md"
 license = "LICENSE"
 packages = [
@@ -44,8 +44,8 @@ sphinx-autobuild = ">=2024.2.4,<2025.0.0"
 atomic = "atomic_assembler.main:main"
 
 [tool.poetry.urls]
-Homepage = "https://github.com/BrainBlend-AI/atomic-agents"
-Repository = "https://github.com/BrainBlend-AI/atomic-agents"
+Homepage = "https://github.com/dablabllc/atomic-agents"
+Repository = "https://github.com/dablabllc/atomic-agents"
 
 [tool.black]
 line-length = 127

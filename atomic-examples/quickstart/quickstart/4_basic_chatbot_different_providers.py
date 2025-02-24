@@ -5,9 +5,13 @@ from rich.panel import Panel
 from rich.text import Text
 from atomic_agents.lib.components.agent_memory import AgentMemory
 from atomic_agents.agents.base_agent import BaseAgent, BaseAgentConfig, BaseAgentInputSchema, BaseAgentOutputSchema
+
 from dotenv import load_dotenv
+from quickstart.config import get_base_url, get_api_key, get_fast_llm
+
 
 load_dotenv()
+
 
 # Initialize a Rich Console for pretty console outputs
 console = Console()
@@ -27,34 +31,34 @@ def setup_client(provider):
         from openai import OpenAI
 
         api_key = os.getenv("OPENAI_API_KEY")
-        client = instructor.from_openai(OpenAI(api_key=api_key))
-        model = "gpt-4o-mini"
+        client = instructor.from_openai(OpenAI(api_key=get_api_key()))
+        model = get_fast_llm()
     elif provider == "2" or provider == "anthropic":
         from anthropic import Anthropic
 
         api_key = os.getenv("ANTHROPIC_API_KEY")
-        client = instructor.from_anthropic(Anthropic(api_key=api_key))
-        model = "claude-3-5-haiku-20241022"
+        client = instructor.from_anthropic(Anthropic(api_key=get_api_key()))
+        model = get_fast_llm()
     elif provider == "3" or provider == "groq":
         from groq import Groq
 
         api_key = os.getenv("GROQ_API_KEY")
-        client = instructor.from_groq(Groq(api_key=api_key), mode=instructor.Mode.JSON)
-        model = "mixtral-8x7b-32768"
+        client = instructor.from_groq(Groq(api_key=get_api_key), mode=instructor.Mode.JSON)
+        model = get_fast_llm()
     elif provider == "4" or provider == "ollama":
         from openai import OpenAI as OllamaClient
 
-        client = instructor.from_openai(OllamaClient(base_url="http://localhost:11434/v1", api_key="ollama"))
-        model = "llama3"
+        client = instructor.from_openai(OllamaClient(base_url=get_base_url(), api_key=get_api_key()))
+        model = get_fast_llm()
     elif provider == "5" or provider == "gemini":
         from openai import OpenAI
 
         api_key = os.getenv("GEMINI_API_KEY")
         client = instructor.from_openai(
-            OpenAI(api_key=api_key, base_url="https://generativelanguage.googleapis.com/v1beta/openai/"),
+            OpenAI(base_url=get_base_url(), api_key=get_api_key()),
             mode=instructor.Mode.JSON,
         )
-        model = "gemini-2.0-flash-exp"
+        model = get_fast_llm()
     else:
         raise ValueError(f"Unsupported provider: {provider}")
 

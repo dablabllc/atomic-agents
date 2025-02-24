@@ -5,17 +5,11 @@ import instructor
 import openai
 from pydantic import Field
 from typing import List
+from dotenv import load_dotenv
+
+
 import os
-
-# API Key setup
-API_KEY = ""
-if not API_KEY:
-    API_KEY = os.getenv("OPENAI_API_KEY")
-
-if not API_KEY:
-    raise ValueError(
-        "API key is not set. Please set the API key as a static variable or in the environment variable OPENAI_API_KEY."
-    )
+from basic_multimodal.config import get_base_url, get_api_key, get_vision_llm
 
 
 class NutritionLabel(BaseIOSchema):
@@ -62,8 +56,8 @@ class NutritionAnalysisOutput(BaseIOSchema):
 # Configure the nutrition analysis system
 nutrition_analyzer = BaseAgent(
     config=BaseAgentConfig(
-        client=instructor.from_openai(openai.OpenAI(api_key=API_KEY)),
-        model="gpt-4o-mini",
+        client=instructor.from_openai(openai.OpenAI(base_url=get_base_url(), api_key=get_api_key()), mode=instructor.Mode.JSON),
+        model=get_vision_llm(),
         system_prompt_generator=SystemPromptGenerator(
             background=[
                 "You are a specialized nutrition label analyzer.",
@@ -140,4 +134,5 @@ def main():
 
 
 if __name__ == "__main__":
+    load_dotenv()
     main()

@@ -8,15 +8,9 @@ from rich.live import Live
 from atomic_agents.lib.components.agent_memory import AgentMemory
 from atomic_agents.agents.base_agent import BaseAgent, BaseAgentConfig, BaseAgentInputSchema, BaseAgentOutputSchema
 
-# API Key setup
-API_KEY = ""
-if not API_KEY:
-    API_KEY = os.getenv("OPENAI_API_KEY")
+from dotenv import load_dotenv
+from quickstart.config import get_base_url, get_api_key, get_fast_llm
 
-if not API_KEY:
-    raise ValueError(
-        "API key is not set. Please set the API key as a static variable or in the environment variable OPENAI_API_KEY."
-    )
 
 # Initialize a Rich Console for pretty console outputs
 console = Console()
@@ -29,13 +23,13 @@ initial_message = BaseAgentOutputSchema(chat_message="Hello! How can I assist yo
 memory.add_message("assistant", initial_message)
 
 # OpenAI client setup using the Instructor library for async operations
-client = instructor.from_openai(openai.AsyncOpenAI(api_key=API_KEY))
+client = instructor.from_openai(openai.AsyncOpenAI(base_url=get_base_url(), api_key=get_api_key()), mode=instructor.Mode.JSON)
 
 # Agent setup with specified configuration
 agent = BaseAgent(
     config=BaseAgentConfig(
         client=client,
-        model="gpt-4o-mini",
+        model=get_fast_llm(),
         memory=memory,
     )
 )
@@ -78,6 +72,8 @@ async def main():
 
 
 if __name__ == "__main__":
-    import asyncio
 
+    load_dotenv()
+
+    import asyncio
     asyncio.run(main())

@@ -14,6 +14,7 @@ from rag_chatbot.context_providers import RAGContextProvider, ChunkItem
 from rag_chatbot.services.chroma_db import ChromaDBService
 from rag_chatbot.config import CHUNK_SIZE, CHUNK_OVERLAP, NUM_CHUNKS_TO_RETRIEVE, CHROMA_PERSIST_DIR
 
+from dotenv import load_dotenv
 
 console = Console()
 
@@ -251,6 +252,8 @@ def chat_loop(chroma_db: ChromaDBService, rag_context: RAGContextProvider) -> No
 
 
 if __name__ == "__main__":
+
+    load_dotenv()
     try:
         chroma_db, rag_context = initialize_system()
         chat_loop(chroma_db, rag_context)

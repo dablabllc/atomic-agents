@@ -8,6 +8,7 @@ from pydantic import Field
 from atomic_agents.agents.base_agent import BaseIOSchema
 from atomic_agents.lib.base.base_tool import BaseTool, BaseToolConfig
 
+from orchestration_agent.config import get_searxng_url, get_searxng_max_results
 
 ################
 # INPUT SCHEMA #
@@ -47,8 +48,8 @@ class SearxNGSearchToolOutputSchema(BaseIOSchema):
 # TOOL LOGIC #
 ##############
 class SearxNGSearchToolConfig(BaseToolConfig):
-    base_url: str = ""
-    max_results: int = 10
+    base_url: str = get_searxng_url()
+    max_results: int = get_searxng_max_results()
 
 
 class SearxNGSearchTool(BaseTool):
@@ -204,7 +205,7 @@ if __name__ == "__main__":
     load_dotenv()
     rich_console = Console()
 
-    search_tool_instance = SearxNGSearchTool(config=SearxNGSearchToolConfig(base_url="http://localhost:8080", max_results=5))
+    search_tool_instance = SearxNGSearchTool(config=SearxNGSearchToolConfig(base_url=get_searxng_url(), max_results=get_searxng_max_results))
 
     search_input = SearxNGSearchTool.input_schema(
         queries=["Python programming", "Machine learning", "Artificial intelligence"],

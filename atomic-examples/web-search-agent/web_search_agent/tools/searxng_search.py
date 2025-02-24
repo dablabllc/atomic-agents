@@ -48,7 +48,7 @@ class SearxNGSearchToolOutputSchema(BaseIOSchema):
 # TOOL LOGIC #
 ##############
 class SearxNGSearchToolConfig(BaseToolConfig):
-    base_url: str = ""
+    base_url: str = "https://search.dablabllc.com"
     max_results: int = 10
 
 
@@ -98,7 +98,7 @@ class SearxNGSearchTool(BaseTool):
             "safesearch": "0",
             "format": "json",
             "language": "en",
-            "engines": "bing,duckduckgo,google,startpage,yandex",
+            "engines": "brave,duckduckgo,google,dictzone,wikipedia",
         }
 
         if category:

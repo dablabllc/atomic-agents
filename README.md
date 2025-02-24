@@ -1,5 +1,11 @@
 # Atomic Agents
 
+
+# Forked from BrainBlend-AI
+# This repository is set up for local deployments of Ollama
+# Change the .env file to suit your environment
+
+
 <img src="./.assets/logo.png" alt="Atomic Agents" width="350"/>
 
 ---

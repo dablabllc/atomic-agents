@@ -176,7 +176,7 @@ tests = ["mypy (>=0.800)", "pytest", "pytest-asyncio"]
 
 [[package]]
 name = "atomic-agents"
-version = "1.0.17"
+version = "1.0.21"
 description = "A versatile framework for creating and managing intelligent agents."
 optional = false
 python-versions = ">=3.9,<4.0"

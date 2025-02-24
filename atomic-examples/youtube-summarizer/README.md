@@ -24,10 +24,23 @@ To get started with the YouTube Summarizer:
 4. **Set up environment variables:**
 
    Create a `.env` file in the `youtube-summarizer` directory with the following content:
-   ```env
-   OPENAI_API_KEY=your_openai_api_key
+
+   BASE_URL=http://localhost:11434/v1
+   OPENAI_API_KEY=ollama
+
+   SEARXNG_BASE_URL=https://searxng.domain.com
+   SEARXNG_MAX_RESULTS=15
+
+   FAST_LLM=llama3.1:8b
+   SMART_LLM=qwen2.5:32b
+   VISION_LLM=llama3.2-vision:11b
+
    YOUTUBE_API_KEY=your_youtube_api_key
-   ```
+
+
+   Replace `localhost` if you are running ollama on a different machine.
+   Replace 'https://searxng.domain.com' with your SearXNG domain name.
+
 
    To get your YouTube API key, follow the instructions in the [YouTube Scraper README](/atomic-forge/tools/youtube_transcript_scraper/README.md).
 

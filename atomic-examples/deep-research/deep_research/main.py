@@ -16,6 +16,8 @@ from rich.table import Table
 from rich import box
 from rich.progress import Progress, SpinnerColumn, TextColumn
 
+from dotenv import load_dotenv
+from deep_research.config import get_searxng_url
 
 console = Console()
 
@@ -52,7 +54,7 @@ def perform_search_and_update_context(
         # Perform the search
         task = progress.add_task("[cyan]Searching the web...", total=None)
         console.print("\n[bold yellow]🌐 Searching across the web using SearxNG...[/bold yellow]")
-        searxng_search_tool = SearxNGSearchTool(SearxNGSearchToolConfig(base_url="http://localhost:8080/"))
+        searxng_search_tool = SearxNGSearchTool(SearxNGSearchToolConfig(base_url=get_searxng_url()))
         search_results = searxng_search_tool.run(SearxNGSearchToolInputSchema(queries=query_agent_output.queries))
         progress.remove_task(task)
 
@@ -147,6 +149,7 @@ def display_answer(answer: str, follow_up_questions: list[str]) -> None:
 
 
 def chat_loop() -> None:
+
     console.print("\n[bold magenta]🚀 Initializing Deep Research System...[/bold magenta]")
 
     # Initialize context providers
@@ -208,4 +211,6 @@ def chat_loop() -> None:
 
 
 if __name__ == "__main__":
+    
+    load_dotenv()
     chat_loop()

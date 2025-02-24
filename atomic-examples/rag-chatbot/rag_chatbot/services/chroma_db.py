@@ -5,6 +5,7 @@ from chromadb.utils.embedding_functions import OpenAIEmbeddingFunction
 from typing import Dict, List, Optional, TypedDict
 import uuid
 
+from rag_chatbot.config import get_api_key, get_embed_llm
 
 class QueryResult(TypedDict):
     documents: List[str]
@@ -31,7 +32,7 @@ class ChromaDBService:
         """
         # Initialize embedding function with OpenAI
         self.embedding_function = OpenAIEmbeddingFunction(
-            api_key=os.getenv("OPENAI_API_KEY"), model_name="text-embedding-3-small"
+            api_key=get_api_key(), model_name=get_embed_llm()
         )
 
         # If recreating, delete the entire persist directory

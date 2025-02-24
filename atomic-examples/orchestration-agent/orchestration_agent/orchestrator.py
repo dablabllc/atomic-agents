@@ -22,6 +22,8 @@ from orchestration_agent.tools.calculator import (
 import instructor
 from datetime import datetime
 
+from orchestration_agent.config import get_base_url, get_api_key, get_fast_llm, get_searxng_url, get_searxng_max_results
+
 
 ########################
 # INPUT/OUTPUT SCHEMAS #
@@ -74,8 +76,8 @@ class CurrentDateProvider(SystemPromptContextProviderBase):
 ######################
 orchestrator_agent = BaseAgent(
     BaseAgentConfig(
-        client=instructor.from_openai(openai.OpenAI()),
-        model="gpt-4o-mini",
+        client=instructor.from_openai(openai.OpenAI(base_url=get_base_url(), api_key=get_api_key()), mode=instructor.Mode.JSON),
+        model=get_fast_llm(),
         system_prompt_generator=SystemPromptGenerator(
             background=[
                 "You are an Orchestrator Agent that decides between using a search tool or a calculator tool based on user input.",
@@ -123,10 +125,10 @@ if __name__ == "__main__":
     load_dotenv()
 
     # Set up the OpenAI client
-    client = instructor.from_openai(openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY")))
+    client = instructor.from_openai(openai.OpenAI(base_url=get_base_url(), api_key=get_api_key()), mode=instructor.Mode.JSON)
 
     # Initialize the tools
-    searxng_tool = SearxNGSearchTool(SearxNGSearchToolConfig(base_url="http://localhost:8080", max_results=5))
+    searxng_tool = SearxNGSearchTool(SearxNGSearchToolConfig(base_url=get_searxng_url(), max_results=get_searxng_max_results()))
     calculator_tool = CalculatorTool(CalculatorToolConfig())
 
     # Initialize Rich console

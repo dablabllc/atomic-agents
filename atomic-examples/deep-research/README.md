@@ -21,9 +21,21 @@ This directory contains the Deep Research Agent example for the Atomic Agents pr
 
 4. **Set up environment variables:**
    Create a `.env` file in the `deep-research` directory with:
-   ```env
-   OPENAI_API_KEY=your_openai_api_key
-   ```
+
+
+   BASE_URL=http://localhost:11434/v1
+   OPENAI_API_KEY=ollama
+
+   SEARXNG_BASE_URL=https://searxng.domain.com
+   SEARXNG_MAX_RESULTS=15
+
+   FAST_LLM=llama3.1:8b
+   SMART_LLM=qwen2.5:32b
+   VISION_LLM=llama3.2-vision:11b
+
+   Replace `localhost` if you are running ollama on a different machine.
+   Replace 'https://searxng.domain.com' with your SearXNG domain name.
+
 
 5. **Set up SearxNG:**
    - Install SearxNG from the [official repository](https://github.com/searxng/searxng)

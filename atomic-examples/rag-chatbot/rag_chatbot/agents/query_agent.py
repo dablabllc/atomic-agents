@@ -4,7 +4,7 @@ from pydantic import Field
 from atomic_agents.agents.base_agent import BaseIOSchema, BaseAgent, BaseAgentConfig
 from atomic_agents.lib.components.system_prompt_generator import SystemPromptGenerator
 
-from rag_chatbot.config import ChatConfig
+from rag_chatbot.config import ChatConfig, get_base_url, get_api_key
 
 
 class RAGQueryAgentInputSchema(BaseIOSchema):
@@ -22,7 +22,7 @@ class RAGQueryAgentOutputSchema(BaseIOSchema):
 
 query_agent = BaseAgent(
     BaseAgentConfig(
-        client=instructor.from_openai(openai.OpenAI(api_key=ChatConfig.api_key)),
+        client=instructor.from_openai(openai.OpenAI(base_url=get_base_url(), api_key=get_api_key()), mode=instructor.Mode.JSON),
         model=ChatConfig.model,
         system_prompt_generator=SystemPromptGenerator(
             background=[

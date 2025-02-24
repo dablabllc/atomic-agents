@@ -8,15 +8,10 @@ from atomic_agents.lib.components.system_prompt_generator import SystemPromptGen
 from atomic_agents.lib.components.agent_memory import AgentMemory
 from atomic_agents.agents.base_agent import BaseAgent, BaseAgentConfig, BaseAgentOutputSchema
 
-# API Key setup
-API_KEY = ""
-if not API_KEY:
-    API_KEY = os.getenv("OPENAI_API_KEY")
+from dotenv import load_dotenv
+from quickstart.config import get_base_url, get_api_key, get_fast_llm
 
-if not API_KEY:
-    raise ValueError(
-        "API key is not set. Please set the API key as a static variable or in the environment variable OPENAI_API_KEY."
-    )
+load_dotenv()
 
 # Initialize a Rich Console for pretty console outputs
 console = Console()
@@ -33,7 +28,7 @@ memory.add_message("assistant", initial_message)
 # OpenAI client setup using the Instructor library
 # Note, you can also set up a client using any other LLM provider, such as Anthropic, Cohere, etc.
 # See the Instructor library for more information: https://github.com/instructor-ai/instructor
-client = instructor.from_openai(openai.OpenAI(api_key=API_KEY))
+client = instructor.from_openai(openai.OpenAI(base_url=get_base_url(), api_key=get_api_key()), mode=instructor.Mode.JSON)
 
 # Instead of the default system prompt, we can set a custom system prompt
 system_prompt_generator = SystemPromptGenerator(
@@ -53,7 +48,7 @@ console.print(Panel(system_prompt_generator.generate_prompt(), width=console.wid
 agent = BaseAgent(
     config=BaseAgentConfig(
         client=client,
-        model="gpt-4o-mini",
+        model=get_fast_llm(),
         system_prompt_generator=system_prompt_generator,
         memory=memory,
     )

@@ -24,8 +24,18 @@ To get started with the YouTube Recipe Extractor:
 4. **Set up environment variables:**
 
    Create a `.env` file in the `youtube-to-recipe` directory with the following content:
-   ```env
-   OPENAI_API_KEY=your_openai_api_key
+
+
+   BASE_URL=http://localhost:11434/v1
+   OPENAI_API_KEY=ollama
+
+   SEARXNG_BASE_URL=https://searxng.domain.com
+   SEARXNG_MAX_RESULTS=15
+
+   FAST_LLM=llama3.1:8b
+   SMART_LLM=qwen2.5:32b
+   VISION_LLM=llama3.2-vision:11b
+
    YOUTUBE_API_KEY=your_youtube_api_key
    ```
 
